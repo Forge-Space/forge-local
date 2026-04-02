@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version from CHANGELOG
+        id: version
+        run: |
+          VERSION=$(grep -m1 '^## \[' CHANGELOG.md | sed 's/## \[//;s/\].*//')
+          if [ "$VERSION" = "Unreleased" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check tag exists
+        if: steps.version.outputs.skip == 'false'
+        id: tag_check
+        run: |
+          if git rev-parse "v${{ steps.version.outputs.version }}" &>/dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Extract release notes
+        if: steps.version.outputs.skip == 'false' && steps.tag_check.outputs.exists == 'false'
+        id: notes
+        run: |
+          awk '/^## \[${{ steps.version.outputs.version }}\]/{found=1; next} found && /^## \[/{exit} found{print}' \
+            CHANGELOG.md > release_notes.md
+
+      - name: Create tag and release
+        if: steps.version.outputs.skip == 'false' && steps.tag_check.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git tag "v${{ steps.version.outputs.version }}"
+          git push origin "v${{ steps.version.outputs.version }}"
+          gh release create "v${{ steps.version.outputs.version }}" \
+            --title "v${{ steps.version.outputs.version }}" \
+            --notes-file release_notes.md

@@ -1,0 +1,40 @@
+<!-- cache_control: ephemeral -->
+
+# Project Agent Guidance
+
+## Category Routing (oh-my-openagent)
+
+| Category | Model | Trigger |
+|----------|-------|------|
+| `quick` | local (gpt-4o-mini → workstation) | <20 lines, single file, typo/config/rename |
+| `unspecified-low` | local (gpt-4.1 → workstation) | 20-200 lines, multi-file, bug fix, test writing |
+| `unspecified-high` | Claude Sonnet max | Complex implementation, deep context needed |
+| `ultrabrain` | Claude Opus max | >200 lines, cross-repo, architecture, migration |
+| `deep` | Claude Opus max | Root cause analysis, pattern investigation |
+| `visual-engineering` | Gemini 3.1 Pro | React, CSS/Tailwind, animations, design systems |
+| `writing` | local (gpt-4.1 → workstation) | CHANGELOG, README, docs, PR descriptions |
+| `artistry` | Gemini 3.1 Pro | Creative/unconventional — use when standard fails |
+| `draft` | local (gpt-4.1 → workstation) | First-pass implementation |
+| `verify` | Claude Sonnet | Review and correct a local draft |
+| `speculative` | local → verify | Medium complexity with uncertain confidence |
+
+### Routing Heuristics
+
+Use the cheapest model that can do the job. Escalate only when needed:
+
+- **Lines changed < 20, single file** → `quick`
+- **Lines changed 20–200, multi-file** → `unspecified-low`
+- **Lines changed >200 or cross-repo impact** → `ultrabrain`
+- **UI/visual work** → `visual-engineering` regardless of size
+- **Docs/prose only** → `writing`
+- **Deep investigation, root cause** → `deep`
+- **Uncertain confidence, medium complexity** → `speculative`
+
+Expected distribution: ~60% local, ~30% Claude Sonnet, ~10% Claude Opus.
+
+## Code Standards
+- Functions: <50 lines, cyclomatic complexity <10, line width <100 chars
+- No comments unless asked
+- No speculative features, no premature abstraction
+- Replace, don't deprecate
+- Security-first: never expose credentials, validate inputs, sanitize outputs

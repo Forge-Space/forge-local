@@ -1,0 +1,118 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+  "agents": {
+    "sisyphus": {
+      "model": "anthropic/claude-opus-4-6",
+      "variant": "max",
+      "prompt_append": "file://~/.config/opencode/AGENTS.md",
+      "fallback_models": ["anthropic/claude-sonnet-4-6", "openai/codex-mini-latest", "openrouter/openai/gpt-4.1"]
+    },
+    "hephaestus": {
+      "model": "anthropic/claude-opus-4-6",
+      "fallback_models": ["anthropic/claude-sonnet-4-6", "openai/codex-mini-latest", "openrouter/openai/gpt-4.1"]
+    },
+    "prometheus": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "fallback_models": ["openai/codex-mini-latest", "openrouter/openai/gpt-4.1"]
+    },
+    "oracle": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "fallback_models": ["openai/codex-mini-latest", "openrouter/openai/gpt-4.1"]
+    },
+    "librarian": {
+      "model": "openrouter/openai/gpt-4o-mini",
+      "textVerbosity": "low",
+      "maxTokens": 2000,
+      "fallback_models": ["openrouter/openai/gpt-4.1-mini", "anthropic/claude-haiku-4-5"]
+    },
+    "metis": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "fallback_models": ["openai/codex-mini-latest", "openrouter/openai/gpt-4.1"]
+    },
+    "momus": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "fallback_models": ["openai/codex-mini-latest", "openrouter/openai/gpt-4.1"]
+    },
+    "multimodal-looker": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "fallback_models": ["openai/codex-mini-latest", "openrouter/openai/gpt-4.1"]
+    },
+    "atlas": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "fallback_models": ["openai/codex-mini-latest", "openrouter/openai/gpt-4.1"]
+    },
+    "sisyphus-junior": {
+      "model": "openrouter/openai/gpt-4.1-nano",
+      "fallback_models": ["openrouter/openai/gpt-4.1", "anthropic/claude-sonnet-4-6", "openai/codex-mini-latest"]
+    },
+    "explore": {
+      "model": "openrouter/openai/gpt-4.1-nano",
+      "textVerbosity": "low",
+      "maxTokens": 2000,
+      "fallback_models": ["openrouter/openai/gpt-4o-mini", "openrouter/openai/gpt-4.1-mini", "anthropic/claude-haiku-4-5"]
+    }
+  },
+  "categories": {
+    "quick": {
+      "model": "openrouter/openai/gpt-4o-mini",
+      "description": "Trivial changes: <20 lines changed, single file, typo fixes, config edits, dependency version bumps, variable renames",
+      "textVerbosity": "low",
+      "maxTokens": 2000,
+      "fallback_models": ["anthropic/claude-haiku-4-5"]
+    },
+    "unspecified-low": {
+      "model": "openrouter/openai/gpt-4.1",
+      "description": "Standard implementation: 20-200 lines changed, multi-file coordination, bug fixes, test writing, code review",
+      "fallback_models": ["anthropic/claude-sonnet-4-6"]
+    },
+    "unspecified-high": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "variant": "max",
+      "description": "High-effort standard work: complex implementation needing deep context but not architecture-level reasoning",
+      "fallback_models": ["openai/codex-mini-latest", "openrouter/openai/gpt-4.1"]
+    },
+    "ultrabrain": {
+      "model": "anthropic/claude-opus-4-6",
+      "variant": "max",
+      "description": "Architecture: >200 lines changed, cross-repo impact, ambiguous requirements, multi-system design, planning migrations",
+      "fallback_models": ["anthropic/claude-sonnet-4-6", "openai/codex-mini-latest", "openrouter/openai/gpt-4.1"]
+    },
+    "deep": {
+      "model": "anthropic/claude-opus-4-6",
+      "variant": "max",
+      "description": "Autonomous research: root cause analysis, pattern investigation across many files, thorough dependency tracing",
+      "fallback_models": ["anthropic/claude-sonnet-4-6", "openai/codex-mini-latest", "openrouter/openai/gpt-4.1"]
+    },
+    "visual-engineering": {
+      "model": "google/gemini-3.1-pro-preview",
+      "variant": "high",
+      "description": "Frontend/UI/UX: React components, CSS/Tailwind, animations, design systems, visual inspection, screenshot review"
+    },
+    "writing": {
+      "model": "openrouter/openai/gpt-4.1",
+      "description": "Documentation: CHANGELOG, README, inline docs, technical writing, PR descriptions, commit messages",
+      "maxTokens": 4000,
+      "fallback_models": ["anthropic/claude-sonnet-4-6"]
+    },
+    "artistry": {
+      "model": "google/gemini-3.1-pro-preview",
+      "variant": "high",
+      "description": "Creative approaches: unconventional solutions, refactoring with flair, when standard approaches have failed or feel stale"
+    },
+    "draft": {
+      "model": "openrouter/openai/gpt-4.1",
+      "description": "Draft generation: local model produces first attempt at implementation or response",
+      "fallback_models": ["openrouter/openai/gpt-4o-mini"]
+    },
+    "verify": {
+      "model": "anthropic/claude-sonnet-4-6",
+      "description": "Verification: Claude reviews and corrects a local model draft — use after draft category",
+      "fallback_models": ["openai/codex-mini-latest", "openrouter/openai/gpt-4.1"]
+    },
+    "speculative": {
+      "model": "openrouter/openai/gpt-4.1",
+      "description": "Speculative drafting: local model drafts, escalate output to verify category for Claude review. Use for medium complexity tasks where local model confidence is uncertain.",
+      "fallback_models": ["anthropic/claude-sonnet-4-6"]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+# Aider hybrid configuration
+# Default: local forge-dev:14b via Ollama (workstation)
+# Editor: Claude Sonnet for targeted edits (speculative drafting pattern)
+
+model: openai/forge-dev:14b
+openai-api-base: http://100.114.87.119:11434/v1
+openai-api-key: ollama
+
+# Editor model uses Claude for review/polish pass
+editor-model: claude-sonnet-4-6
+
+# Workflow settings
+auto-commits: false
+dirty-commits: false
+gitignore: true

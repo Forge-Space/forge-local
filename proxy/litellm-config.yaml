@@ -1,0 +1,55 @@
+# LiteLLM proxy — Forge Space local model gateway
+# Maps Claude/GPT model names to local Ollama models on the workstation
+# Start: litellm --config litellm-config.yaml
+# Port: 4000
+# Auth: sk-forge-local
+
+model_list:
+  # Claude aliases → forge-dev:14b
+  - model_name: claude-haiku-4-5
+    litellm_params:
+      model: ollama/forge-dev:14b
+      api_base: http://localhost:11434
+
+  - model_name: claude-sonnet-4-6
+    litellm_params:
+      model: ollama/forge-dev:14b
+      api_base: http://localhost:11434
+
+  - model_name: claude-opus-4-6
+    litellm_params:
+      model: ollama/forge-dev:14b
+      api_base: http://localhost:11434
+
+  # Local models (direct)
+  - model_name: forge-dev:14b
+    litellm_params:
+      model: ollama/forge-dev:14b
+      api_base: http://localhost:11434
+      num_ctx: 16384
+
+  - model_name: forge-dev:32b
+    litellm_params:
+      model: ollama/forge-dev:32b
+      api_base: http://localhost:11434
+      num_ctx: 16384
+
+  - model_name: forge-claude:14b
+    litellm_params:
+      model: ollama/forge-claude:14b
+      api_base: http://localhost:11434
+      num_ctx: 16384
+
+  - model_name: llama3.1:8b
+    litellm_params:
+      model: ollama/llama3.1:8b-instruct-q4_K_M
+      api_base: http://localhost:11434
+      num_ctx: 8192
+
+litellm_settings:
+  success_callback:
+    - forge_trainer.forge_trainer
+
+general_settings:
+  master_key: sk-forge-local
+  port: 4000
