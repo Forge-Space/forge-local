@@ -1,10 +1,10 @@
 # forge-dev:14b — Forge Space coding base
-# Qwen 2.5 Coder 14B + Forge coding standards
+# Qwen 3.5 27B + Forge coding standards
 # Build: ollama create forge-dev:14b -f forge-dev.modelfile
 
-FROM qwen2.5-coder:14b
+FROM qwen3.5:27b
 
-PARAMETER num_ctx 16384
+PARAMETER num_ctx 32768
 PARAMETER temperature 0.7
 PARAMETER num_predict 4096
 PARAMETER top_p 0.9

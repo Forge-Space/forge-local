@@ -113,6 +113,11 @@
       "model": "openrouter/openai/gpt-4.1",
       "description": "Speculative drafting: local model drafts, escalate output to verify category for Claude review. Use for medium complexity tasks where local model confidence is uncertain.",
       "fallback_models": ["anthropic/claude-sonnet-4-6"]
+    },
+    "local-deep": {
+      "model": "openrouter/openai/deepseek-r1-local",
+      "description": "Local reasoning: hard debugging, chain-of-thought root cause analysis, multi-file tracing — on-device without cloud spend. Use when deep/ultrabrain feel expensive for the problem size.",
+      "fallback_models": ["openrouter/openai/gpt-4.1", "anthropic/claude-sonnet-4-6"]
     }
   }
 }

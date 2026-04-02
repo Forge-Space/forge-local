@@ -6,15 +6,16 @@
 
 | Category | Model | Trigger |
 |----------|-------|------|
-| `quick` | local (gpt-4o-mini → workstation) | <20 lines, single file, typo/config/rename |
-| `unspecified-low` | local (gpt-4.1 → workstation) | 20-200 lines, multi-file, bug fix, test writing |
+| `quick` | Qwen 3.5 9B (local) | <20 lines, single file, typo/config/rename |
+| `unspecified-low` | Qwen 3.5 27B (local) | 20-200 lines, multi-file, bug fix, test writing |
 | `unspecified-high` | Claude Sonnet max | Complex implementation, deep context needed |
 | `ultrabrain` | Claude Opus max | >200 lines, cross-repo, architecture, migration |
 | `deep` | Claude Opus max | Root cause analysis, pattern investigation |
+| `local-deep` | DeepSeek R1 14B (local) | On-device reasoning, CoT debugging without cloud spend |
 | `visual-engineering` | Gemini 3.1 Pro | React, CSS/Tailwind, animations, design systems |
-| `writing` | local (gpt-4.1 → workstation) | CHANGELOG, README, docs, PR descriptions |
+| `writing` | Qwen 3.5 27B (local) | CHANGELOG, README, docs, PR descriptions |
 | `artistry` | Gemini 3.1 Pro | Creative/unconventional — use when standard fails |
-| `draft` | local (gpt-4.1 → workstation) | First-pass implementation |
+| `draft` | Qwen 3.5 27B (local) | First-pass implementation |
 | `verify` | Claude Sonnet | Review and correct a local draft |
 | `speculative` | local → verify | Medium complexity with uncertain confidence |
 
@@ -27,10 +28,20 @@ Use the cheapest model that can do the job. Escalate only when needed:
 - **Lines changed >200 or cross-repo impact** → `ultrabrain`
 - **UI/visual work** → `visual-engineering` regardless of size
 - **Docs/prose only** → `writing`
-- **Deep investigation, root cause** → `deep`
+- **Deep investigation, want local first** → `local-deep` → escalate to `deep` if needed
 - **Uncertain confidence, medium complexity** → `speculative`
 
 Expected distribution: ~60% local, ~30% Claude Sonnet, ~10% Claude Opus.
+
+## Local Models (oac-workstation)
+
+| Model | Tag | VRAM | Use |
+|---|---|---|---|
+| Qwen 3.5 27B | `qwen3.5:27b` | 16GB | Primary — all unspecified-low/draft/writing tasks |
+| Qwen 3.5 9B | `qwen3.5:9b` | 5.5GB | Fast — quick/explore/librarian tasks |
+| DeepSeek R1 14B | `deepseek-r1:14b` | 9GB | Reasoning — local-deep category |
+| forge-dev:14b | built from 27B | 16GB | Forge-tuned primary (Modelfile wraps qwen3.5:27b) |
+| forge-claude:14b | built from forge-dev | 16GB | Agent-aware sub-agent model |
 
 ## Code Standards
 - Functions: <50 lines, cyclomatic complexity <10, line width <100 chars

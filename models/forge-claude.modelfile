@@ -1,10 +1,10 @@
 # forge-claude:14b — agent-aware Forge model
-# Extends forge-dev:14b with oh-my-openagent routing context
+# Extends forge-dev:14b (Qwen 3.5 27B base) with oh-my-openagent routing context
 # Build: ollama create forge-claude:14b -f forge-claude.modelfile
 
 FROM forge-dev:14b
 
-PARAMETER num_ctx 16384
+PARAMETER num_ctx 32768
 PARAMETER temperature 0.6
 PARAMETER num_predict 4096
 PARAMETER top_p 0.9

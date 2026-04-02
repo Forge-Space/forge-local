@@ -5,7 +5,7 @@
 # Auth: sk-forge-local
 
 model_list:
-  # Claude aliases → forge-dev:14b
+  # Claude aliases → forge-dev:14b (Qwen 3.5 27B)
   - model_name: claude-haiku-4-5
     litellm_params:
       model: ollama/forge-dev:14b
@@ -21,30 +21,39 @@ model_list:
       model: ollama/forge-dev:14b
       api_base: http://localhost:11434
 
-  # Local models (direct)
+  # Primary local models
   - model_name: forge-dev:14b
     litellm_params:
       model: ollama/forge-dev:14b
       api_base: http://localhost:11434
-      num_ctx: 16384
-
-  - model_name: forge-dev:32b
-    litellm_params:
-      model: ollama/forge-dev:32b
-      api_base: http://localhost:11434
-      num_ctx: 16384
+      num_ctx: 32768
 
   - model_name: forge-claude:14b
     litellm_params:
       model: ollama/forge-claude:14b
       api_base: http://localhost:11434
+      num_ctx: 32768
+
+  # Fast lightweight model
+  - model_name: qwen3.5:9b
+    litellm_params:
+      model: ollama/qwen3.5:9b
+      api_base: http://localhost:11434
       num_ctx: 16384
 
-  - model_name: llama3.1:8b
+  # Reasoning model (chain-of-thought)
+  - model_name: deepseek-r1:14b
     litellm_params:
-      model: ollama/llama3.1:8b-instruct-q4_K_M
+      model: ollama/deepseek-r1:14b
       api_base: http://localhost:11434
-      num_ctx: 8192
+      num_ctx: 16384
+
+  # Legacy / fallback
+  - model_name: forge-dev:32b
+    litellm_params:
+      model: ollama/forge-dev:32b
+      api_base: http://localhost:11434
+      num_ctx: 32768
 
 litellm_settings:
   success_callback:
